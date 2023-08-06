@@ -5,11 +5,14 @@ import {
     FormControl,
     FormErrorMessage,
     FormLabel,
+    HStack,
     Heading,
     Input,
     Spacer,
+    Text,
     VStack,
 } from "@chakra-ui/react";
+import { Rubik_Gemstones } from "next/font/google";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import runes from "runes2";
@@ -420,20 +423,26 @@ const Home = () => {
     ];
     return (
         <VStack>
-            <VStack spacing={10} w="80vw">
+            <VStack spacing={10} w="90vw">
                 <Spacer />
                 <Heading>The Password Game</Heading>
                 <FormControl isInvalid={AllValidator.some((e) => e.error)}>
                     <FormLabel>Password</FormLabel>
-                    <Input
-                        id="password"
-                        placeholder="password"
-                        value={password}
-                        borderColor="black"
-                        onChange={(e) => {
-                            setPassword(e.target.value);
-                        }}
-                    />
+                    <HStack>
+                        <Input
+                            w="80vw"
+                            id="password"
+                            placeholder="password"
+                            value={password}
+                            borderColor="black"
+                            onChange={(e) => {
+                                setPassword(e.target.value);
+                            }}
+                        />
+                        <Text fontSize={"1em"}>
+                            {"文字数: " + runes(password).length}
+                        </Text>
+                    </HStack>
                     {AllValidator.map((validate) => {
                         if (validate.error) {
                             return (
