@@ -9,12 +9,22 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@chakra-ui/next-js": "^2.1.5",
+    "@chakra-ui/react": "^2.8.0",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
     "@types/node": "20.4.8",
     "@types/react": "18.2.18",
     "@types/react-dom": "18.2.7",
+    "framer-motion": "^10.15.0",
     "next": "13.4.12",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "typescript": "5.1.6"
+    "runes2": "^1.1.2",
+    "typescript": "5.1.6",
+    "ua-parser-js": "^1.0.35"
+  },
+  "devDependencies": {
+    "@types/ua-parser-js": "^0.7.36"
   }
 }
