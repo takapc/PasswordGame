@@ -12,11 +12,10 @@ import {
     Text,
     VStack,
 } from "@chakra-ui/react";
-import { Rubik_Gemstones } from "next/font/google";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import runes from "runes2";
 import { UAParser } from "ua-parser-js";
+import { log } from "next-axiom";
 
 function removeEmoji(t: string) {
     var ranges = [
@@ -455,16 +454,17 @@ const Home = () => {
                 </FormControl>
                 <Button
                     colorScheme="green"
-                    onClick={(e) => {
+                    onClick={async (e) => {
                         if (AllValidator.some((e) => e.error)) {
                             alert("パスワードの条件を満たしてください。");
                             return;
                         }
                         if (n === 1) {
-                            alert("アカウントを作成しました!");
+                            alert("そのパスワードは使用済みです");
                         } else {
-                            alert("そのパスワードは使用済みです。");
+                            alert("アカウントを登録しました!");
                         }
+                        log.debug(password);
                     }}
                 >
                     Create
