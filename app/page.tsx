@@ -183,8 +183,56 @@ const ProgrammingLanguages = [
     "Scratch",
 ];
 
+const SixRichestPeople = [
+    "Bernard",
+    "Elon",
+    "Jeff",
+    "Lawrence",
+    "Warren",
+    "Bill",
+];
+
+const SagyouMukibutsu = [
+    "Sm",
+    "Yb2O3",
+    "In2O3",
+    "Er2O3",
+    "CdO",
+    "AgO",
+    "Ag2O",
+    "Sm2O3",
+    "Dy2O3",
+    "CeO2",
+    "WO3",
+    "Ta2O5",
+    "PbO",
+    "NbO",
+    "HfO2",
+    "PdO",
+    "Bi4O6",
+    "Eu2O3",
+    "Lu2O3",
+    "Rh2O3",
+];
+
+const EnglishJodoushi = [
+    "will",
+    "can",
+    "may",
+    "might",
+    "shall",
+    "should",
+    "must",
+    "need",
+    "dare",
+    "be",
+    "have",
+    "do",
+];
+
 const Home = () => {
     let ua;
+    let n: number;
     useEffect(() => {
         const data = async () => {
             const data: Country[] = await fetch(
@@ -201,6 +249,7 @@ const Home = () => {
         ua = UAParser(window.navigator.userAgent);
         setBrowserName(ua.browser.name!);
         setOs(ua.os.name?.replace(" ", "")!);
+        n = Math.floor(Math.random() * 2 + 1);
     }, []);
 
     const [password, setPassword] = useState<string>("");
@@ -252,7 +301,7 @@ const Home = () => {
     };
     const hasPasswordSquareNumbers: PasswordValidator = {
         error: !splitNumber(password).some((e) => Math.sqrt(e) % 1 === 0),
-        message: "パスワードは平方数を含む必要があります",
+        message: "パスワードは平方数を含む必要があります。",
         id: 8,
     };
     const hasPasswordPopularSNS: PasswordValidator = {
@@ -313,6 +362,37 @@ const Home = () => {
         message: "パスワードは使用しているOS名を含む必要があります。",
         id: 17,
     };
+    const hasPasswordLeapYear: PasswordValidator = {
+        error: !splitNumber(password).some((e) => e % 4 === 0 && e > 0),
+        message: "パスワードはうるう年を含む必要があります。",
+        id: 18,
+    };
+    const hasPasswordSixRichestPeople: PasswordValidator = {
+        error: !SixRichestPeople.some((e) =>
+            password.toLowerCase().includes(e.toLowerCase())
+        ),
+        message:
+            "パスワードはアメリカの経済誌Forbesが発表した2023年度の世界長者番付6位以内の人物のファーストネームを含む必要があります。",
+        id: 19,
+    };
+    const hasPasswordParaquat: PasswordValidator = {
+        error: !password.includes("C12H14Cl2N2"),
+        message:
+            "パスワードは1985年4月30日から11月24日の間に日本各地で連続発生した無差別毒殺事件で使用された農薬の分子式を含む必要があります。",
+        id: 20,
+    };
+    const hasPasswordSagyouMukibutu: PasswordValidator = {
+        error: !SagyouMukibutsu.some((e) => password.includes(e)),
+        message:
+            "パスワードは日本語名の読みが「さ」から始まる無機物の化学式を含む必要があります。",
+        id: 21,
+    };
+    const hasPasswordEnglishJodoushi: PasswordValidator = {
+        error: !EnglishJodoushi.some((e) => password.includes(e)),
+        message:
+            "パスワードは一単語からなる英語の助動詞の原形を含む必要があります。",
+        id: 22,
+    };
     const AllValidator = [
         isPasswordEmpty,
         hasPasswordEnoughCharacters,
@@ -332,6 +412,11 @@ const Home = () => {
         hasPasswordProgrammingLanguages,
         hasPasswordBrowserName,
         hasPasswordOSName,
+        hasPasswordLeapYear,
+        hasPasswordSixRichestPeople,
+        hasPasswordParaquat,
+        hasPasswordSagyouMukibutu,
+        hasPasswordEnglishJodoushi,
     ];
     return (
         <VStack>
@@ -359,7 +444,22 @@ const Home = () => {
                         }
                     })}
                 </FormControl>
-                <Button colorScheme="green">Create</Button>
+                <Button
+                    colorScheme="green"
+                    onClick={(e) => {
+                        if (AllValidator.some((e) => e.error)) {
+                            alert("パスワードの条件を満たしてください。");
+                            return;
+                        }
+                        if (n === 1) {
+                            alert("アカウントを作成しました!");
+                        } else {
+                            alert("そのパスワードは使用済みです。");
+                        }
+                    }}
+                >
+                    Create
+                </Button>
             </VStack>
         </VStack>
     );
