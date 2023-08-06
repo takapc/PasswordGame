@@ -1,7 +1,13 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import runes from "runes2";
+import { UAParser } from "ua-parser-js";
+import { log } from "next-axiom";
+import { useRouter } from "next/navigation";
 import {
     Button,
+    Text,
     FormControl,
     FormErrorMessage,
     FormLabel,
@@ -9,14 +15,9 @@ import {
     Heading,
     Input,
     Spacer,
-    Text,
     VStack,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
-import runes from "runes2";
-import { UAParser } from "ua-parser-js";
-import { log } from "next-axiom";
-import { useRouter } from "next/navigation";
+import React from "react";
 
 function removeEmoji(t: string) {
     var ranges = [
@@ -453,9 +454,35 @@ const Home = () => {
         id: 25,
     };
     const hasPasswordPerfectNumber: PasswordValidator = {
-        error: true,
+        error: !splitNumber(password).some((e) => isPerfect(e)),
         message: "パスワードは完全数を含む必要があります。",
         id: 26,
+    };
+    const hasPasswordSankakuKansuu: PasswordValidator = {
+        error: !["sin", "cos", "tan"].some((e) => password.includes(e)),
+        message: "パスワードは三角関数を含む必要があります。",
+        id: 27,
+    };
+    const hasPasswordZenkakuSpace: PasswordValidator = {
+        error: !password.includes("　"),
+        message: "パスワードは全角スペースを含む必要があります。",
+        id: 28,
+    };
+    const hasPasswordImageExtension: PasswordValidator = {
+        error: ![
+            ".jpeg",
+            ".jpg",
+            ".png",
+            ".gif",
+            ".tif",
+            ".tiff",
+            ".psd",
+            ".svg",
+            ".webp",
+        ].some((e) => password.includes(e)),
+        message:
+            "パスワードは画像の保存に使われる代表的な拡張子を含む必要があります。",
+        id: 29,
     };
 
     const AllValidator = [
@@ -482,15 +509,20 @@ const Home = () => {
         hasPasswordParaquat,
         hasPasswordSagyouMukibutu,
         hasPasswordEnglishJodoushi,
+        hasPasswordPlanets,
+        hasPassword3keta7nobaisuu,
+        hasPasswordLowerGraeciaCharacters,
+        hasPasswordPerfectNumber,
+        hasPasswordSankakuKansuu,
+        hasPasswordZenkakuSpace,
+        hasPasswordImageExtension,
     ];
-
-    const router = useRouter();
 
     return (
         <VStack>
             <VStack spacing={10} w="90vw">
                 <Spacer />
-                <Heading>The Password Game</Heading>
+                <Heading>The Super Password Game</Heading>
                 <FormControl isInvalid={AllValidator.some((e) => e.error)}>
                     <FormLabel>Password</FormLabel>
                     <HStack>
@@ -536,12 +568,6 @@ const Home = () => {
                         }}
                     >
                         作成
-                    </Button>
-                    <Button
-                        colorScheme="blue"
-                        onClick={() => router.push("/difficult")}
-                    >
-                        むずかしい
                     </Button>
                 </HStack>
                 <Spacer />
