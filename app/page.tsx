@@ -81,6 +81,7 @@ const Elements = ["He", "Ne", "Ar", "Kr", "Xe", "Rn"];
 const GAFAM = ["Google", "Amazon", "Facebook", "Apple", "Microsoft"];
 const SNS = [
     "Twitter",
+    "X",
     "Instagram",
     "LINE",
     "Discord",
