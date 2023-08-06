@@ -390,7 +390,7 @@ const Home = () => {
     const hasPasswordSagyouMukibutu: PasswordValidator = {
         error: !SagyouMukibutsu.some((e) => password.includes(e)),
         message:
-            "パスワードは日本語名の読みが「さ」から始まる無機物の化学式を含む必要があります。",
+            "パスワードは日本語名の読みが「さ」から始まる比重が7.00以上の無機物の化学式を含む必要があります。",
         id: 21,
     };
     const hasPasswordEnglishJodoushi: PasswordValidator = {
