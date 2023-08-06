@@ -438,7 +438,7 @@ const Home = () => {
             }
         }),
         message:
-            "パスワードは太陽系の惑星のうち異なる2つを含む必要があります。",
+            "パスワードは2006年時点で太陽系の惑星のうち異なる2つを含む必要があります。",
         id: 23,
     };
     const hasPassword3keta7nobaisuu: PasswordValidator = {
